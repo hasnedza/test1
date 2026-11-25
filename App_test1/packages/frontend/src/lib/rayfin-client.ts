@@ -5,12 +5,15 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-import { browserSession } from '@microsoft/rayfin-auth';
 import { RayfinClient, resolveRayfinConfig } from '@microsoft/rayfin-client';
+import { browserSession } from '@microsoft/rayfin-auth';
 import { dataService } from '@microsoft/rayfin-data';
+import { storageService } from '@microsoft/rayfin-storage';
 import type { UniversalAppSchema } from '@rayfin-app/shared';
+import type { AppStorageSchema } from './storage-schema';
 
 export type AppClient = ReturnType<typeof createClient>;
+
 let _client: Promise<AppClient> | undefined;
 
 export class MissingRayfinConfigError extends Error {
@@ -23,10 +26,8 @@ export class MissingRayfinConfigError extends Error {
 /**
  * Resolves and shares the app's configured Rayfin client.
  *
- * Typed by `UniversalAppSchema`, so `client.data.<Entity>` is checked against
- * the entities declared by `@rayfin-app/data`. Without the generic the
- * data API is `any`, and a typo in an entity or field name only surfaces at
- * runtime — which the app's `tsc --noCheck` build would never catch.
+ * Typed by `UniversalAppSchema` and `AppStorageSchema`, so `client.data.<Entity>`
+ * and `client.storage.<Folder>` are both checked against what the app declares.
  *
  * Async because deployment-specific values are resolved at runtime rather than
  * compiled in: a Deployment Pipeline promotes one built artifact from Dev to
@@ -78,6 +79,9 @@ function createClient(config: {
   return RayfinClient.create({
     ...config,
     auth: browserSession({ storage: true }),
-    services: { data: dataService<UniversalAppSchema>() },
+    services: {
+      data: dataService<UniversalAppSchema>(),
+      storage: storageService<AppStorageSchema>(),
+    },
   });
 }

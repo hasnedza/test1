@@ -2,6 +2,9 @@ id: app-test1
 name: App_test1
 version: 1.0.0
 services:
+  storage:
+    enabled: true
+    path: "packages/storage"
   auth:
     enabled: true
     fabric:
@@ -12,9 +15,10 @@ services:
     allowedRedirectUris:
       - http://localhost:5173
   data:
-    enabled: false
+    enabled: true
     path: packages/data
     buildCommand: npm run build
+    dialect: "mssql"
   staticHosting:
     enabled: true
     path: packages/frontend

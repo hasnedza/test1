@@ -20,6 +20,7 @@
     "@microsoft/rayfin-client": "^2.0.1",
     "@microsoft/rayfin-data": "^2.0.1",
     "@microsoft/rayfin-lib": "^2.0.1",
+    "@microsoft/rayfin-storage": "^2.0.1",
     "@rayfin-app/shared": "*",
     "@tailwindcss/vite": "^4.3.0",
     "clsx": "^2.1.1",
