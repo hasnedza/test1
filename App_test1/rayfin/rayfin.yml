@@ -4,7 +4,7 @@ version: 1.0.0
 services:
   storage:
     enabled: true
-    path: "packages/storage"
+    path: packages/storage
   auth:
     enabled: true
     fabric:
@@ -14,11 +14,13 @@ services:
       enabled: false
     allowedRedirectUris:
       - http://localhost:5173
+      - http://127.0.0.1:5173
+      - https://good-echo-2557e426c9-southeastasia.webapp.fabricapps.net
   data:
     enabled: true
     path: packages/data
     buildCommand: npm run build
-    dialect: "mssql"
+    dialect: mssql
   staticHosting:
     enabled: true
     path: packages/frontend
@@ -28,3 +30,5 @@ services:
     assetAccess: protected
     embedded:
       only: false
+  functions:
+    enabled: false

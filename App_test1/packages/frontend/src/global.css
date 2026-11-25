@@ -8,42 +8,31 @@
    `useCssTheme()` and project them into a JS theme object (Vega's SVG output
    cannot resolve `var()` references). */
 @theme static {
-  --color-brand: #0f6cbd; /* bar/area fills, button-like brand surfaces */
-  --color-brand-foreground: #0f6cbd; /* line/point marks, branded text & emphasis */
-  --color-hover: #f5f5f5; /* row/cell hover surface in DataGrid + visuals */
+  --color-brand: #1d684f;
+  --color-brand-foreground: #28775c;
+  --color-hover: #e4eee7;
 }
 
 @theme {
-  /* Color tokens — light theme
-     Usage: bg-*, text-*, border-* (e.g. bg-primary text-primary-foreground)
-     Each token has a -foreground pair for text on that surface. */
-  --color-background: #ffffff; /* page background */
-  --color-foreground: #242424; /* default text */
-
-  --color-card: #ffffff; /* card surfaces */
-  --color-card-foreground: #242424;
-
-  --color-popover: #ffffff; /* popover/dropdown surfaces */
-  --color-popover-foreground: #242424;
-
-  --color-primary: #0f6cbd; /* primary actions & buttons */
-  --color-primary-foreground: #ffffff;
-
-  --color-secondary: #fafafa; /* secondary actions */
-  --color-secondary-foreground: #242424;
-
-  --color-muted: #f0f0f0; /* subtle backgrounds */
-  --color-muted-foreground: #616161; /* subdued text */
-
-  --color-accent: #f5f5f5; /* accent highlights */
-  --color-accent-foreground: #242424;
-
-  --color-destructive: #c50f1f; /* errors & destructive actions */
+  --color-background: #f6f5f0;
+  --color-foreground: #23312c;
+  --color-card: #fffefa;
+  --color-card-foreground: #23312c;
+  --color-popover: #fffefa;
+  --color-popover-foreground: #23312c;
+  --color-primary: #1d684f;
+  --color-primary-foreground: #fffefa;
+  --color-secondary: #efeee7;
+  --color-secondary-foreground: #2e3933;
+  --color-muted: #ecebe3;
+  --color-muted-foreground: #66716a;
+  --color-accent: #e4eee7;
+  --color-accent-foreground: #223d31;
+  --color-destructive: #b42318;
   --color-destructive-foreground: #ffffff;
-
-  --color-border: #e0e0e0; /* default border */
-  --color-input: #e0e0e0; /* input field borders */
-  --color-ring: #0f6cbd; /* focus rings */
+  --color-border: #deded5;
+  --color-input: #d0d6ce;
+  --color-ring: #28775c;
 
   --radius-none: 0;
   --radius-sm: 2px;
@@ -106,22 +95,11 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Font Families
-     Usage: font-* (e.g. font-heading, font-base) */
-  --font-heading:
-    'Segoe UI', 'Segoe UI Web (West European)',
-    /* headings, titles, display text */ -apple-system, BlinkMacSystemFont,
-    Roboto, 'Helvetica Neue', sans-serif;
-  --font-base:
-    'Segoe UI', 'Segoe UI Web (West European)',
-    /* body text, labels, UI controls */ -apple-system, BlinkMacSystemFont,
-    Roboto, 'Helvetica Neue', sans-serif;
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-base: 'DM Sans', 'Segoe UI', sans-serif;
   --font-monospace:
     Consolas, 'Courier New', Courier, monospace; /* code, pre-formatted text */
-  --font-numeric:
-    Bahnschrift, 'Segoe UI',
-    /* KPI values, numeric displays */ 'Segoe UI Web (West European)',
-    -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  --font-numeric: 'DM Sans', 'Segoe UI', sans-serif;
 
   /* Icon Sizes — 100-based scale
      Usage: icon-size-* custom utility (e.g. icon-size-200) */
@@ -141,38 +119,28 @@
 
 @layer base {
   .dark {
-    /* Color tokens — dark theme */
-    --color-background: #292929;
-    --color-foreground: #ffffff;
-
-    --color-card: #292929;
-    --color-card-foreground: #ffffff;
-
-    --color-popover: #292929;
-    --color-popover-foreground: #ffffff;
-
-    --color-primary: #115ea3;
-    --color-primary-foreground: #ffffff;
-
-    --color-secondary: #1f1f1f;
-    --color-secondary-foreground: #ffffff;
-
-    --color-muted: #141414;
-    --color-muted-foreground: #adadad;
-
-    --color-accent: #3d3d3d;
-    --color-accent-foreground: #ffffff;
-
-    --color-destructive: #c50f1f;
+    --color-background: #101a16;
+    --color-foreground: #e9eee9;
+    --color-card: #18231e;
+    --color-card-foreground: #e9eee9;
+    --color-popover: #18231e;
+    --color-popover-foreground: #e9eee9;
+    --color-primary: #8ad1aa;
+    --color-primary-foreground: #10241a;
+    --color-secondary: #24322b;
+    --color-secondary-foreground: #e9eee9;
+    --color-muted: #1c2922;
+    --color-muted-foreground: #a8b7ac;
+    --color-accent: #26372e;
+    --color-accent-foreground: #e9eee9;
+    --color-destructive: #e34f4f;
     --color-destructive-foreground: #ffffff;
-
-    --color-border: #525252;
-    --color-input: #525252;
-    --color-ring: #479ef5;
-
-    --color-brand: #115ea3;
-    --color-brand-foreground: #479ef5;
-    --color-hover: #3d3d3d;
+    --color-border: #36463b;
+    --color-input: #33443a;
+    --color-ring: #8ad1aa;
+    --color-brand: #28775c;
+    --color-brand-foreground: #8ad1aa;
+    --color-hover: #26372e;
   }
 }
 
@@ -182,7 +150,14 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased font-base;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
   }
 }
 

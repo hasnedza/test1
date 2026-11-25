@@ -1,31 +1,68 @@
-//-----------------------------------------------------------------------
-// <copyright company="Microsoft Corporation">
-//        Copyright (c) Microsoft Corporation.  All rights reserved.
-//        Licensed under the MIT license. See LICENSE file in the project root for full license information.
-// </copyright>
-//-----------------------------------------------------------------------
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { render } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+const reportEntryApi = vi.hoisted(() => ({
+  list: vi.fn(async () => []),
+  create: vi.fn(),
+  update: vi.fn(),
+  remove: vi.fn(),
+}));
 
-// The welcome view polls a dev-only activity endpoint via `useSourceActivity`.
-// In this smoke test there is no dev server, so stub the hook to return no feed:
-// the view renders its illustrative state synchronously and nothing settles after
-// the test (which would otherwise log a React `act(...)` warning).
-vi.mock('./Welcome.activity', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('./Welcome.activity')>();
-  return { ...actual, useSourceActivity: () => null };
-});
+vi.mock('@/lib/report-entry-api', () => ({ reportEntryApi }));
 
 import App from '@/App';
+import { AuthContext, type AuthContextValue } from '@/hooks/auth.context';
+import { REPORT_DIRECTORY_ADMIN_EMAIL } from '@rayfin-app/shared';
 
-describe('App', () => {
-  it('renders without throwing', () => {
-    expect(() => render(<App />)).not.toThrow();
+function renderApp(email: string) {
+  const auth: AuthContextValue = {
+    session: {
+      user: { id: 'test-user', email },
+      isAuthenticated: true,
+      isAnonymous: false,
+    },
+    isAuthenticated: true,
+    isLoading: false,
+    canSignIn: false,
+    signIn: async () => {},
+    isSigningIn: false,
+    signInError: null,
+    config: { kind: 'ready' },
+    error: null,
+  };
+
+  return render(
+    <AuthContext.Provider value={auth}>
+      <App />
+    </AuthContext.Provider>
+  );
+}
+
+describe('Report directory app', () => {
+  beforeEach(() => {
+    reportEntryApi.list.mockResolvedValue([]);
   });
 
-  it('mounts content into the document', () => {
-    render(<App />);
-    expect(document.body).not.toBeEmptyDOMElement();
+  it('renders the directory and its empty state for signed-in viewers', async () => {
+    renderApp('viewer@example.com');
+
+    expect(
+      await screen.findByText('The directory is ready for its first report')
+    ).toBeVisible();
+    expect(
+      screen.getByRole('heading', { name: 'Find the report.' })
+    ).toBeVisible();
+    expect(
+      screen.queryByRole('button', { name: 'Add report' })
+    ).toBeNull();
+  });
+
+  it('shows catalog management to the configured directory writer', async () => {
+    renderApp(REPORT_DIRECTORY_ADMIN_EMAIL);
+
+    await screen.findByText('The directory is ready for its first report');
+    expect(
+      screen.getByRole('button', { name: 'Add report' })
+    ).toBeVisible();
   });
 });

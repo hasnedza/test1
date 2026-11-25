@@ -1,10 +1,10 @@
-# Universal App Template
+# Fabric Report Directory
 
 > **⚠️ This repository is under active development.** Features and instructions may change.
 
-This is the workspace template the Rayfin Copilot plugin uses to build Fabric Apps.
-The base is small on purpose: dynamic authentication, theming, an error boundary, and a welcome page that works inside or outside the Fabric portal after sign-in.
-Capabilities such as Power BI analytics and trusted server-side functions are added on demand with `npm run pack:add -- <pack>`.
+This Fabric app provides a searchable directory of reports, categorized by Org App and linked to their Fabric Audiences and reports. Each entry includes a description and keywords; signed-in users can browse, search, and filter the catalog, while catalog changes are restricted by the Rayfin data policy to the configured directory manager.
+
+Entries are managed in the app and stored as `ReportEntry` records. Searches cover report names, Org Apps, Audience names, descriptions, and keywords. Add and verify links to Fabric Audiences and reports through the directory management form.
 
 ## Workspace layout
 
